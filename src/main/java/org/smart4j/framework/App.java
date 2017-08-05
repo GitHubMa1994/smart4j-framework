@@ -1,4 +1,4 @@
-package org.smart4j;
+package org.smart4j.framework;
 
 /**
  * Hello world!
