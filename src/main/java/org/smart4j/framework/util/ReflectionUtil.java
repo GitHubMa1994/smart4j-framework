@@ -23,7 +23,7 @@ public final class ReflectionUtil {
 			Instance=cls.newInstance();
 		} catch (Exception e) {
 			LOGGER.error("new instance failure",e);
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 		return Instance;
 	}
@@ -38,7 +38,7 @@ public final class ReflectionUtil {
 			result=method.invoke(obj, args);
 		} catch (Exception e) {
 			LOGGER.error("invoke method failure",e);
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 		return result;
 	}
@@ -48,9 +48,12 @@ public final class ReflectionUtil {
 	 */
 	public static void setField(Object obj,Field field,Object value){
 		try {
-			
+			field.setAccessible(true);
+			field.set(obj, value);
 		} catch (Exception e) {
-			// TODO: handle exception
+			//TODO: handle exception
+			LOGGER.error("set field failure",e);
+			throw new RuntimeException(e);
 		}
 	}
 }
