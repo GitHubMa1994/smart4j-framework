@@ -3,9 +3,9 @@ package org.smart4j.framework.helper;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.smart4j.framework.annotation.Inject;
 import org.smart4j.framework.util.ArrayUtil;
+import org.smart4j.framework.util.ReflectionUtil;
 
 /**
  * 依赖注入助手类
@@ -28,6 +28,11 @@ public final class IocHelper {
 						if (beanField.isAnnotationPresent(Inject.class)){
 							//在BeanMap中获取BeanField对应的实例
 							Class<?> beanFieldClass=beanField.getType();
+							Object beanFieldInstance = beanMap.get(beanFieldClass);
+							if (beanFieldInstance!=null) {
+								//通过反射初始化BeanField的值
+								ReflectionUtil.setField(beanInstance, beanField, beanFieldInstance);
+							}
 						}
 					}
 				}

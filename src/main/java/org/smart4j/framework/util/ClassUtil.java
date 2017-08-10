@@ -44,6 +44,17 @@ public final class ClassUtil {
 		return cls;
 	}
 	
+	public static Class<?> loadClass(String className){
+		Class<?> cls;
+		try {
+			cls=Class.forName(className, false, getClassLoader());
+		} catch (ClassNotFoundException e) {
+			LOGGER.error("load class failure",e);
+			throw new RuntimeException();
+		}
+		return cls;
+	}
+	
 	/**
 	 * 获取指定包名下的所有类
 	 */
